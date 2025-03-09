@@ -1,0 +1,394 @@
+/* ESTILOS GERAIS */
+:root {
+  --primary-color: #0d84ff;
+  --secondary-color: #39f5e2;
+  --accent-color: #ff6b6b;
+  --dark-bg: #0a192f;
+  --light-text: #ffffff;
+  --dark-text: #0a192f;
+  --panel-bg: rgba(20, 40, 80, 0.8);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--dark-bg);
+  font-family: "Chakra Petch", sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+canvas {
+  display: block;
+}
+
+/* TELA DE CARREGAMENTO */
+#loadingScreen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #142952 0%, #0a192f 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.8s;
+}
+
+/* Efeito de grade futurista */
+#grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(66, 133, 244, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(66, 133, 244, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: center center;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Logo animado */
+#agentLogo {
+  width: 180px;
+  height: 180px;
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.logo-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-outer {
+  border-radius: 50%;
+  border: 3px solid rgba(57, 245, 226, 0.7);
+  box-shadow: 0 0 25px rgba(57, 245, 226, 0.4);
+  animation: rotate 10s linear infinite;
+}
+
+.logo-middle {
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+  border: 2px solid rgba(13, 132, 255, 0.8);
+  box-shadow: 0 0 15px rgba(13, 132, 255, 0.5);
+  animation: rotate 7s linear infinite reverse;
+}
+
+.logo-inner {
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0d84ff, #39f5e2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 30px rgba(57, 245, 226, 0.6);
+  animation: pulse 2s infinite alternate;
+}
+
+.logo-text {
+  font-family: "Press Start 2P", cursive;
+  color: var(--dark-text);
+  font-size: 20px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Loading bar */
+.loading-container {
+  width: 300px;
+  position: relative;
+  margin: 30px 0;
+}
+
+#loadingBar {
+  width: 100%;
+  height: 20px;
+  background-color: rgba(25, 40, 60, 0.6);
+  border: 2px solid rgba(57, 245, 226, 0.5);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+#loadingProgress {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  box-shadow: 0 0 10px var(--primary-color);
+  transition: width 0.3s;
+  position: relative;
+}
+
+#loadingProgress::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shine 1.5s infinite;
+}
+
+#loadingText {
+  color: var(--light-text);
+  font-size: 18px;
+  margin-top: 15px;
+  text-align: center;
+  min-height: 24px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(57, 245, 226, 0.7);
+}
+
+#loading-percentage {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  color: var(--secondary-color);
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(57, 245, 226, 0.5);
+}
+
+/* Partículas digitais flutuantes */
+.digital-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background-color: var(--secondary-color);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: float 15s infinite linear;
+  opacity: 0.5;
+}
+
+/* Dicas que aparecem durante o carregamento */
+#tips-container {
+  position: absolute;
+  bottom: 40px;
+  width: 80%;
+  max-width: 600px;
+  background-color: rgba(13, 132, 255, 0.2);
+  border: 1px solid rgba(57, 245, 226, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+}
+
+#tip-icon {
+  flex-shrink: 0;
+  width: 30px;
+  color: var(--secondary-color);
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+#tip-text {
+  color: var(--light-text);
+  font-size: 14px;
+  opacity: 0;
+  animation: fadeInOut 10s infinite;
+}
+
+/* OVERLAY DO CELULAR/TABLET */
+#phoneOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.phone-container {
+  width: 85%;
+  max-width: 900px;
+  height: 85%;
+  background: #1a1a1a;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(57, 245, 226, 0.5), 0 0 60px rgba(13, 132, 255, 0.3);
+  border: 3px solid #333;
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.phone-container.active {
+  transform: scale(1);
+}
+
+.phone-header {
+  background: #111;
+  height: 40px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  border-bottom: 1px solid #333;
+  z-index: 10;
+}
+
+.phone-time {
+  color: var(--light-text);
+  font-size: 14px;
+}
+
+.phone-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.phone-status-icon {
+  color: var(--secondary-color);
+  font-size: 12px;
+}
+
+#phoneIframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0 0 17px 17px;
+  position: relative;
+  top: 40px;
+  height: calc(100% - 40px);
+  background: #000;
+}
+
+.phone-button {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ff3a3a;
+  top: 50px;
+  right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 10px rgba(255, 58, 58, 0.5);
+  z-index: 100;
+  transition: all 0.2s ease;
+}
+
+.phone-button:hover {
+  background: #ff6060;
+  transform: scale(1.1);
+}
+
+.phone-button:active {
+  transform: scale(0.95);
+}
+
+/* ANIMAÇÕES */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 10px rgba(57, 245, 226, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 25px rgba(57, 245, 226, 0.8);
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(10px, 30px);
+  }
+  50% {
+    transform: translate(25px, 10px);
+  }
+  75% {
+    transform: translate(-15px, 20px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 1;
+  }
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+  #agentLogo {
+    width: 150px;
+    height: 150px;
+  }
+
+  .loading-container {
+    width: 85%;
+    max-width: 300px;
+  }
+
+  .logo-text {
+    font-size: 16px;
+  }
+
+  #tips-container {
+    bottom: 20px;
+    width: 90%;
+  }
+}

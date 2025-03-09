@@ -1,0 +1,552 @@
+/* ===========================
+   1. Variáveis e Reset
+   =========================== */
+:root {
+  --primary-color: #0d84ff;
+  --secondary-color: #39f5e2;
+  --accent-color: #ff6b6b;
+  --dark-bg: #0a192f;
+  --dark-panel: #111927;
+  --light-text: #ffffff;
+  --light-text-muted: #cccccc;
+  --title-color: #79ffff;
+  --highlight-color: #ebff8d;
+  --glow-color: rgba(57, 245, 226, 0.7);
+}
+  
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===========================
+   2. Fontes e estilo base
+   =========================== */
+@font-face {
+  font-family: "RainyHearts";
+  src: url("../../assets/fonts/rainyhearts.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, var(--dark-bg), #0d1d41);
+  font-family: 'Chakra Petch', 'RainyHearts', sans-serif;
+  color: var(--light-text);
+  text-align: center;
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Grade digital futurista no fundo */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(57, 245, 226, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57, 245, 226, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: center center;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Overlay de vinheta para melhorar legibilidade */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(10, 25, 47, 0.7) 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ===========================
+   3. Cabeçalho e título
+   =========================== */
+.header {
+  position: relative;
+  padding: 30px 0;
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+
+h1 {
+  margin: 0;
+  font-size: 3.5rem;
+  font-family: 'Press Start 2P', 'RainyHearts', monospace;
+  text-shadow: 0 0 10px var(--glow-color);
+  color: var(--title-color);
+  position: relative;
+  display: inline-block;
+  letter-spacing: 2px;
+}
+
+/* Linha decorativa sob o título */
+h1::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(57, 245, 226, 0), var(--glow-color), rgba(57, 245, 226, 0));
+}
+
+/* Decoração digital no cabeçalho */
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+  opacity: 0.7;
+  animation: scanline 3s linear infinite;
+}
+
+/* Subtítulo com efeito de tipografia digital */
+.subtitle {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: var(--secondary-color);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  opacity: 0.8;
+}
+
+/* ===========================
+   4. Container das "tábuas"
+   =========================== */
+.container {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto 60px;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===========================
+   5. Estilos dos painéis (tablet)
+   =========================== */
+.tablet {
+  width: 350px;
+  background: rgba(25, 40, 60, 0.9);
+  border: 3px solid var(--secondary-color);
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(57, 245, 226, 0.3);
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+
+.tablet:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 40px rgba(57, 245, 226, 0.5);
+}
+
+/* 
+   Efeito minimal de neon/tira luminosa no topo
+   Com efeito "flicker" (piscar)
+*/
+.tablet::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 6px;
+  background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+  border-radius: 3px;
+  box-shadow: 0 0 12px var(--secondary-color), 0 0 8px var(--primary-color) inset;
+  animation: neonFlicker 3s infinite alternate;
+}
+
+/* Scanline animation effect - for cyber look */
+.tablet::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, transparent 50%, rgba(57, 245, 226, 0.05) 50%, transparent);
+  background-size: 100% 4px;
+  animation: scanlines 2s linear infinite;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+/* Título do tablet */
+.tablet h2 {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 2.2rem;
+  font-family: 'Press Start 2P', 'RainyHearts', monospace;
+  text-transform: uppercase;
+  color: var(--title-color);
+  text-shadow: 0 0 10px rgba(57, 245, 226, 0.5);
+  position: relative;
+  padding-bottom: 15px;
+}
+
+/* Underline decorativa para o título */
+.tablet h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+}
+
+/* Lista */
+.tablet ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  flex: 1;
+}
+
+.tablet li {
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+
+.tablet li strong {
+  color: var(--highlight-color);
+  text-shadow: 1px 1px 2px #036872;
+  font-weight: bold;
+}
+
+/* ===========================
+   6. Mandamento e ícones
+   =========================== */
+.mandamento {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+  border-left: 3px solid var(--secondary-color);
+}
+
+/* Efeito de gradiente que percorre o elemento */
+.mandamento::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+  pointer-events: none;
+}
+
+.mandamento:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.mandamento:hover::after {
+  transform: translateX(100%);
+}
+
+/* Container do texto do mandamento */
+.mandamento-text {
+  flex: 1;
+  margin-right: 15px;
+}
+
+/* Ícones específicos para cada princípio/prática */
+.icon-lab {
+  font-size: 1.8rem;
+  transition: transform 0.3s ease;
+  color: var(--secondary-color);
+  text-shadow: 0 0 5px var(--secondary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(57, 245, 226, 0.1);
+}
+
+.icon-lab.rotated {
+  transform: rotate(180deg);
+}
+
+/* ===========================
+   7. Explicações 
+   =========================== */
+.explanation {
+  display: block;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+  margin-top: 10px;
+  font-size: 1.1rem;
+  background: rgba(0, 40, 80, 0.3);
+  padding: 0 10px;
+  border-radius: 5px;
+  border-left: 3px solid var(--primary-color);
+  position: relative;
+}
+
+/* Quando estiver visível (classe "open"), expande a altura */
+.explanation.open {
+  opacity: 1;
+  max-height: 500px; /* Um valor grande o suficiente para caber o texto */
+  padding: 15px;
+}
+
+/* Linha de código para efeito de terminal */
+.explanation::before {
+  content: ">";
+  position: absolute;
+  left: 5px;
+  top: 15px;
+  color: var(--secondary-color);
+  font-weight: bold;
+  opacity: 0.7;
+}
+
+/* ===========================
+   8. Estilo do cursor piscante
+   =========================== */
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 16px;
+  background-color: var(--secondary-color);
+  margin-left: 5px;
+  vertical-align: middle;
+  animation: blink 0.8s steps(1) infinite;
+}
+
+/* ===========================
+   9. Botão de voltar melhorado
+   =========================== */
+.button-container {
+  padding: 20px 0 30px;
+  position: relative;
+}
+
+.voltar-btn {
+  display: inline-block;
+  padding: 12px 30px;
+  font-size: 18px;
+  font-family: 'Chakra Petch', 'RainyHearts', sans-serif;
+  background-color: var(--secondary-color);
+  color: var(--dark-bg);
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(57, 245, 226, 0.5);
+  text-transform: uppercase;
+  font-weight: bold;
+  outline: none;
+}
+
+.voltar-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: all 0.3s ease;
+}
+
+.voltar-btn:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(43, 112, 161, 0.3);
+}
+
+.voltar-btn:hover::before {
+  left: 100%;
+}
+
+.voltar-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 5px 10px rgba(43, 112, 161, 0.2);
+}
+
+/* Feedback visual quando o botão é pressionado */
+.voltar-btn:active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 0.1s ease;
+}
+
+/* ===========================
+   10. Animações 
+   =========================== */
+/* Cursor piscante */
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Efeito de flicker neon */
+@keyframes neonFlicker {
+  0% {
+    box-shadow: 0 0 12px var(--secondary-color), 0 0 8px var(--primary-color) inset;
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 18px var(--secondary-color), 0 0 10px var(--primary-color) inset;
+    opacity: 0.9;
+  }
+  60% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.9;
+  }
+  100% {
+    box-shadow: 0 0 15px var(--secondary-color), 0 0 6px var(--primary-color) inset;
+    opacity: 1;
+  }
+}
+
+/* Animação de scanline (linhas horizontais) */
+@keyframes scanlines {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+/* Linhas de scan horizontais */
+@keyframes scanline {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Efeito de pulso suave */
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ===========================
+   11. Responsividade
+   =========================== */
+@media (max-width: 800px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .tablet {
+    width: 90%;
+    max-width: 500px;
+  }
+  h1 {
+    font-size: 2.5rem;
+  }
+  .tablet h2 {
+    font-size: 1.8rem;
+  }
+  .mandamento {
+    padding: 10px;
+  }
+  .mandamento-text {
+    font-size: 1.2rem;
+  }
+  .explanation {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2rem;
+  }
+  .tablet h2 {
+    font-size: 1.5rem;
+  }
+  .subtitle {
+    font-size: 1rem;
+  }
+  .tablet li {
+    font-size: 1.2rem;
+  }
+  .icon-lab {
+    font-size: 1.4rem;
+    width: 30px;
+    height: 30px;
+  }
+  .voltar-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+}
+
+/* Partículas digitais flutuantes */
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: var(--secondary-color);
+  border-radius: 50%;
+  opacity: 0.3;
+  pointer-events: none;
+  animation: float 15s infinite linear;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(10px, 30px); }
+  50% { transform: translate(25px, 10px); }
+  75% { transform: translate(-15px, 20px); }
+  100% { transform: translate(0, 0); }
+}

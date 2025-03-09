@@ -1,0 +1,984 @@
+/* ===========================
+   STYLE.CSS - DPO HERO
+   Estilos específicos para os componentes do jogo
+   ============================= */
+
+/* ===========================
+   1. Variáveis e cores
+   =========================== */
+:root {
+  --primary-color: #0d84ff;         /* Azul principal */
+  --secondary-color: #39f5e2;       /* Ciano secundário */
+  --accent-color: #ff6b6b;          /* Vermelho para alertas */
+  --positive-color: #4caf50;        /* Verde para elementos positivos */
+  --warning-color: #ffc107;         /* Amarelo para alertas */
+  --info-color: #2196f3;            /* Azul informativo */
+  
+  /* Cores de fundo e texto */
+  --dark-bg: #0a192f;               /* Fundo escuro principal */
+  --dark-panel: #111927;            /* Painéis escuros */
+  --light-text: #ffffff;            /* Texto claro */
+  --light-text-muted: #cccccc;      /* Texto claro com menos destaque */
+  --dark-text: #0a1520;             /* Texto escuro */
+  --highlight-text: #79ffff;        /* Texto destacado ciano */
+  --emphasis-text: #ebff8d;         /* Texto com ênfase amarelado */
+  
+  /* Sombras e destaques */
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  --glow-primary: 0 0 15px rgba(13, 132, 255, 0.7);
+  --glow-secondary: 0 0 15px rgba(57, 245, 226, 0.7);
+  --text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* ===========================
+   2. Fonts e Tipografia
+   =========================== */
+@font-face {
+  font-family: "RainyHearts";
+  src: url("./rainyhearts.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Fallback para fontes web seguras */
+body {
+  font-family: 'Chakra Petch', 'RainyHearts', sans-serif;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Press Start 2P', 'RainyHearts', monospace;
+  font-weight: 700;
+  color: var(--highlight-text);
+}
+
+/* ===========================
+   3. Estilo geral da página
+   =========================== */
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--dark-bg);
+  color: var(--light-text);
+  text-align: center;
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Fundo com imagem e overlay de gradiente */
+body.with-background {
+  background: url("../assets/imagens/fundo.webp") no-repeat center center;
+  background-size: cover;
+  position: relative;
+}
+
+body.with-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(10, 25, 47, 0.7), rgba(10, 25, 47, 0.9));
+  z-index: -1;
+}
+
+/* Grade digital futurista */
+body.with-grid::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  background-image: 
+    linear-gradient(rgba(57, 245, 226, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57, 245, 226, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: center center;
+}
+
+h1 {
+  margin: 20px 0 30px;
+  font-size: 4rem;
+  text-shadow: var(--text-shadow);
+  color: var(--highlight-text);
+  letter-spacing: 2px;
+  position: relative;
+}
+
+/* Efeito de linha brilhante sob o título */
+h1.with-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    rgba(57, 245, 226, 0), 
+    rgba(57, 245, 226, 0.8), 
+    rgba(57, 245, 226, 0));
+  box-shadow: var(--glow-secondary);
+}
+
+/* Subtítulos */
+.subtitle {
+  font-size: 1.8rem;
+  color: var(--light-text-muted);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Seções */
+.section {
+  padding: 40px 0;
+  position: relative;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-shadow: var(--text-shadow);
+}
+
+/* ===========================
+   4. Container das "tábuas" e cards
+   =========================== */
+.container {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Card genérico */
+.card {
+  background: rgba(25, 40, 60, 0.8);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(57, 245, 226, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), var(--glow-secondary);
+}
+
+.card-title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--highlight-text);
+}
+
+.card-content {
+  color: var(--light-text);
+}
+
+/* ===========================
+   5. Estilos dos painéis (tablet)
+   =========================== */
+.tablet {
+  width: 350px;
+  background: rgba(25, 40, 60, 0.8);
+  border: 3px solid var(--secondary-color);
+  border-radius: 16px;
+  box-shadow: var(--glow-secondary);
+  padding: 25px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+
+.tablet:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 30px rgba(57, 245, 226, 0.5);
+  border-color: var(--secondary-color);
+}
+
+/* 
+   Efeito de luz no topo do tablet 
+*/
+.tablet::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 6px;
+  background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+  border-radius: 3px;
+  box-shadow: 0 0 12px var(--secondary-color), 0 0 8px var(--primary-color) inset;
+  animation: neonFlicker 3s infinite alternate;
+}
+
+/* Efeito de scanline para visual cibernético */
+.tablet::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    transparent 50%,
+    rgba(57, 245, 226, 0.05) 50%,
+    transparent
+  );
+  background-size: 100% 4px;
+  animation: scanlines 2s linear infinite;
+  pointer-events: none;
+  opacity: 0.3;
+  z-index: 0;
+}
+
+.tablet h2 {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  color: var(--highlight-text);
+  text-shadow: 0 0 10px rgba(57, 245, 226, 0.5);
+  position: relative;
+  padding-bottom: 15px;
+  text-align: center;
+}
+
+/* Linha decorativa abaixo do título */
+.tablet h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+}
+
+/* Lista */
+.tablet ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.tablet li {
+  margin-bottom: 18px;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+
+.tablet li strong {
+  color: var(--emphasis-text);
+  text-shadow: 1px 1px 2px rgba(3, 104, 114, 0.8);
+  font-weight: bold;
+}
+
+/* ===========================
+   6. Componentes interativos
+   =========================== */
+/* Botões */
+.button {
+  display: inline-block;
+  padding: 12px 30px;
+  background-color: var(--primary-color);
+  color: var(--light-text);
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.button:hover {
+  background-color: var(--secondary-color);
+  color: var(--dark-text);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Efeito de brilho ao passar o mouse */
+.button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.button:hover::after {
+  left: 100%;
+}
+
+/* Variantes de botões */
+.button-secondary {
+  background-color: var(--secondary-color);
+  color: var(--dark-text);
+}
+
+.button-secondary:hover {
+  background-color: var(--primary-color);
+  color: var(--light-text);
+}
+
+.button-danger {
+  background-color: var(--accent-color);
+}
+
+.button-success {
+  background-color: var(--positive-color);
+}
+
+.button-warning {
+  background-color: var(--warning-color);
+  color: var(--dark-text);
+}
+
+.button-info {
+  background-color: var(--info-color);
+}
+
+/* Botão com ícone */
+.button-icon {
+  padding-left: 50px;
+  position: relative;
+}
+
+.button-icon::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* ===========================
+   7. Elementos interativos
+   =========================== */
+.mandamento {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+  border-left: 3px solid var(--secondary-color);
+}
+
+.mandamento:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Efeito de gradiente que percorre o elemento */
+.mandamento::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+  pointer-events: none;
+}
+
+.mandamento:hover::after {
+  transform: translateX(100%);
+}
+
+.mandamento-text {
+  flex: 1;
+  padding-right: 15px;
+}
+
+.icon-lab {
+  font-size: 1.8rem;
+  transition: transform 0.3s ease;
+  color: var(--secondary-color);
+  text-shadow: 0 0 5px var(--secondary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(57, 245, 226, 0.1);
+}
+
+.icon-lab.rotated {
+  transform: rotate(180deg);
+}
+
+/* ===========================
+   8. Explicações e textos expandíveis
+   =========================== */
+.explanation {
+  display: block;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.5s ease;
+  opacity: 0;
+  margin-top: 5px;
+  font-size: 1.1rem;
+  background: rgba(0, 40, 80, 0.3);
+  padding: 0 15px;
+  border-radius: 8px;
+  border-left: 3px solid var(--primary-color);
+  position: relative;
+  line-height: 1.6;
+}
+
+.explanation.open {
+  opacity: 1;
+  max-height: 500px; /* Valor suficiente para o texto*/
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+/* Estilo para código ou prompt */
+.explanation.code-style {
+  font-family: monospace;
+  background: rgba(0, 0, 0, 0.6);
+  border-left: 3px solid var(--secondary-color);
+}
+
+.explanation.code-style::before {
+  content: ">";
+  position: absolute;
+  left: 5px;
+  top: 15px;
+  color: var(--secondary-color);
+}
+
+/* ===========================
+   9. Efeitos visuais e decorações
+   =========================== */
+/* Cursor piscante */
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 16px;
+  background-color: var(--secondary-color);
+  margin-left: 5px;
+  animation: blink 0.8s steps(1) infinite;
+}
+
+/* Highlighter para texto importante */
+.highlight {
+  background: linear-gradient(to bottom, transparent 40%, rgba(57, 245, 226, 0.2) 40%, rgba(57, 245, 226, 0.2) 90%, transparent 90%);
+  padding: 0 5px;
+}
+
+/* Badge ou etiqueta destacada */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  background-color: var(--secondary-color);
+  color: var(--dark-text);
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.badge-primary {
+  background-color: var(--primary-color);
+  color: var(--light-text);
+}
+
+.badge-accent {
+  background-color: var(--accent-color);
+  color: var(--light-text);
+}
+
+/* Divisores estilizados */
+.divider {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+  margin: 30px 0;
+  position: relative;
+}
+
+.divider::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 8px;
+  background-color: var(--secondary-color);
+  border-radius: 2px;
+}
+
+/* Tooltip */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+  border-bottom: 1px dashed var(--secondary-color);
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: var(--dark-panel);
+  color: var(--light-text);
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -100px;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  transform: translateY(10px);
+  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(57, 245, 226, 0.2);
+  font-size: 0.9rem;
+}
+
+.tooltip .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--dark-panel) transparent transparent transparent;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===========================
+   10. Animações
+   =========================== */
+/* Cursor piscante */
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Efeito de flicker neon */
+@keyframes neonFlicker {
+  0% {
+    box-shadow: 0 0 12px var(--secondary-color), 0 0 8px var(--primary-color) inset;
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 18px var(--secondary-color), 0 0 10px var(--primary-color) inset;
+    opacity: 0.9;
+  }
+  60% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.9;
+  }
+  100% {
+    box-shadow: 0 0 15px var(--secondary-color), 0 0 6px var(--primary-color) inset;
+    opacity: 1;
+  }
+}
+
+/* Scanlines para efeito retro/cyber */
+@keyframes scanlines {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+/* Pulso suave */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Slide in de elementos */
+@keyframes slideInRight {
+  from { transform: translateX(50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Float suave */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+/* Classes para animar elementos */
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.slide-in {
+  animation: slideInRight 0.5s ease-out forwards;
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.neon-flicker {
+  animation: neonFlicker 3s infinite alternate;
+}
+
+/* ===========================
+   11. Componentes adicionais
+   =========================== */
+/* Barra de progresso */
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 10px 0;
+  position: relative;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  border-radius: 10px;
+  transition: width 0.5s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: shine 2s infinite linear;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.progress-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+  z-index: 1;
+}
+
+/* Alerta/Notificação */
+.alert {
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 8px;
+  background-color: rgba(25, 40, 60, 0.8);
+  border-left: 4px solid var(--primary-color);
+  position: relative;
+  box-shadow: var(--card-shadow);
+}
+
+.alert-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: var(--secondary-color);
+}
+
+.alert-info {
+  border-left-color: var(--info-color);
+}
+
+.alert-success {
+  border-left-color: var(--positive-color);
+}
+
+.alert-warning {
+  border-left-color: var(--warning-color);
+}
+
+.alert-danger {
+  border-left-color: var(--accent-color);
+}
+
+/* Formulários estilizados */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(57, 245, 226, 0.3);
+  border-radius: 6px;
+  color: var(--light-text);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 2px rgba(57, 245, 226, 0.2);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.form-select {
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="6"><path d="M0 0l6 6 6-6z" fill="%23ffffff"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 30px;
+}
+
+/* ===========================
+   12. Responsividade
+   =========================== */
+@media (max-width: 1200px) {
+  .container {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 992px) {
+  html {
+    font-size: 15px;
+  }
+  
+  h1 {
+    font-size: 3.5rem;
+  }
+  
+  .tablet {
+    width: 320px;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+  
+  h1 {
+    font-size: 3rem;
+  }
+  
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .tablet {
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .tablet h2 {
+    font-size: 2rem;
+  }
+  
+  .container {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  html {
+    font-size: 13px;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+  
+  .tablet {
+    padding: 15px;
+  }
+  
+  .tablet li {
+    font-size: 1.2rem;
+  }
+  
+  .icon-lab {
+    font-size: 1.4rem;
+    width: 30px;
+    height: 30px;
+  }
+  
+  .mandamento {
+    padding: 10px;
+  }
+  
+  .container {
+    padding: 0 15px;
+  }
+}
+
+/* ===========================
+   13. Utilitários
+   =========================== */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+.mb-5 { margin-bottom: 3rem; }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+.mt-5 { margin-top: 3rem; }
+
+.p-0 { padding: 0; }
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+.p-4 { padding: 2rem; }
+.p-5 { padding: 3rem; }
+
+.w-100 { width: 100%; }
+.w-75 { width: 75%; }
+.w-50 { width: 50%; }
+.w-25 { width: 25%; }
+
+.d-flex { display: flex; }
+.flex-column { flex-direction: column; }
+.flex-row { flex-direction: row; }
+.justify-content-center { justify-content: center; }
+.justify-content-between { justify-content: space-between; }
+.align-items-center { align-items: center; }
+.align-items-start { align-items: flex-start; }
+.align-items-end { align-items: flex-end; }
+
+.text-primary { color: var(--primary-color); }
+.text-secondary { color: var(--secondary-color); }
+.text-accent { color: var(--accent-color); }
+.text-success { color: var(--positive-color); }
+.text-warning { color: var(--warning-color); }
+.text-muted { color: var(--light-text-muted); }
+
+.bg-dark { background-color: var(--dark-bg); }
+.bg-panel { background-color: var(--dark-panel); }
+.bg-primary { background-color: var(--primary-color); }
+.bg-secondary { background-color: var(--secondary-color); }
+
+.shadow { box-shadow: var(--card-shadow); }
+.text-shadow { text-shadow: var(--text-shadow); }
+.glow-primary { box-shadow: var(--glow-primary); }
+.glow-secondary { box-shadow: var(--glow-secondary); }
+
+.rounded { border-radius: 8px; }
+.rounded-lg { border-radius: 16px; }
+.rounded-circle { border-radius: 50%; }
+
+.border { border: 1px solid rgba(57, 245, 226, 0.3); }
+.border-primary { border-color: var(--primary-color); }
+.border-secondary { border-color: var(--secondary-color); }
+
+.hidden { display: none; }
+.visible { display: block; }
+.invisible { visibility: hidden; }

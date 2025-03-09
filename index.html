@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DPO Hero - Guardiões de Dados</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="src/css/index.css" />
+  </head>
+  <body>
+    <!-- Tela de carregamento aprimorada -->
+    <div id="loadingScreen">
+      <div id="grid-overlay"></div>
+
+      <!-- Partículas digitais -->
+      <div id="particles-container"></div>
+
+      <!-- Logo animado -->
+      <div id="agentLogo">
+        <div class="logo-circle logo-outer"></div>
+        <div class="logo-circle logo-middle"></div>
+        <div class="logo-circle logo-inner">
+          <div class="logo-text">AGPD</div>
+        </div>
+      </div>
+
+      <!-- Container de carregamento -->
+      <div class="loading-container">
+        <div id="loading-percentage">0%</div>
+        <div id="loadingBar">
+          <div id="loadingProgress"></div>
+        </div>
+      </div>
+      <div id="loadingText">Inicializando sistemas de proteção de dados...</div>
+
+      <!-- Dicas durante o carregamento -->
+      <div id="tips-container">
+        <div id="tip-icon">💡</div>
+        <div id="tip-text">A LGPD estabelece regras sobre coleta, armazenamento, tratamento e compartilhamento de dados pessoais.</div>
+      </div>
+    </div>
+
+    <!-- Overlay do celular/tablet melhorado -->
+    <div id="phoneOverlay">
+      <div class="phone-container">
+        <div class="phone-header">
+          <div class="phone-time" id="phone-time">14:25</div>
+          <div class="phone-status">
+            <span class="phone-status-icon">📶</span>
+            <span class="phone-status-icon">🔒</span>
+            <span class="phone-status-icon">🔋</span>
+          </div>
+        </div>
+        <iframe id="phoneIframe" src="src/html/dezmand.html"></iframe>
+        <button class="phone-button" onclick="closePhone()">X</button>
+      </div>
+    </div>
+
+    <!-- Carregamento de scripts em ordem adequada -->
+    <!-- Utilitários -->
+    <script src="src/js/utils/drawingUtils.js"></script>
+    <script src="src/js/utils/helpers.js"></script>
+    <script src="src/js/utils/uiComponents/index.js"></script>
+    <script src="src/js/utils/saveManager.js"></script>
+    <script src="src/js/utils/agentHUD/index.js"></script>
+    <script src="src/js/utils/uiImprovements.js"></script>
+
+    <!-- Core do jogo -->
+    <script src="src/js/core/phaser.js"></script>
+
+    <!-- Cenas -->
+    <script src="src/js/scenes/mainMenu/index.js"></script>
+    <script src="src/js/scenes/chooseRole/index.js"></script>
+    <script src="src/js/scenes/conversation/index.js"></script>
+    <script src="src/js/scenes/gameInicial/index.js"></script>
+    <script src="src/js/scenes/cenaInicial/index.js"></script>
+    <script src="src/js/scenes/missionsHub/index.js"></script>
+    <script src="src/js/scenes/schoolMission/index.js"></script>
+    <script src="src/js/scenes/jardimMission/index.js"></script>
+
+    <!-- Inicialização -->
+    <script src="src/js/core/game.js"></script>
+
+    <script>
+      // Criação de partículas digitais
+      function createDigitalParticles() {
+        const particlesContainer = document.getElementById("particles-container");
+        const numParticles = 50;
+
+        for (let i = 0; i < numParticles; i++) {
+          const particle = document.createElement("div");
+          particle.classList.add("digital-particle");
+
+          // Posições aleatórias
+          const posX = Math.random() * window.innerWidth;
+          const posY = Math.random() * window.innerHeight;
+          const size = Math.random() * 4 + 1;
+          const opacity = Math.random() * 0.6 + 0.2;
+          const delay = Math.random() * 15;
+
+          particle.style.left = `${posX}px`;
+          particle.style.top = `${posY}px`;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.opacity = opacity;
+          particle.style.animationDelay = `${delay}s`;
+
+          particlesContainer.appendChild(particle);
+        }
+      }
+
+      // Atualizar hora no celular
+      function updatePhoneTime() {
+        const timeElement = document.getElementById("phone-time");
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, "0");
+        const minutes = now.getMinutes().toString().padStart(2, "0");
+        timeElement.textContent = `${hours}:${minutes}`;
+      }
+
+      // Array de dicas sobre LGPD e proteção de dados
+      const tips = ["A LGPD estabelece regras sobre coleta, armazenamento, tratamento e compartilhamento de dados pessoais.", "Dados sensíveis incluem informações sobre origem racial, saúde, vida sexual, dados genéticos ou biométricos.", "Todo cidadão tem o direito de saber quais dados uma empresa possui sobre ele e solicitar sua exclusão.", "O consentimento é um dos principais fundamentos para o tratamento de dados pessoais.", "Em caso de vazamento de dados, a empresa deve notificar os usuários e a ANPD em até 48 horas.", "O princípio da minimização de dados recomenda coletar apenas as informações estritamente necessárias.", "Medidas de segurança, técnicas e administrativas devem ser implementadas para proteger os dados pessoais.", "O tratamento de dados de crianças e adolescentes exige consentimento específico de um dos pais ou responsável.", "DPO (Data Protection Officer) ou Encarregado é a pessoa responsável pela proteção de dados na organização.", "Sua missão como agente DPO é garantir a conformidade com a LGPD e proteger os dados dos cidadãos."];
+
+      // Função para alternar as dicas
+      function rotateTips() {
+        const tipText = document.getElementById("tip-text");
+        let currentTipIndex = 0;
+
+        setInterval(() => {
+          tipText.style.opacity = 0;
+
+          setTimeout(() => {
+            currentTipIndex = (currentTipIndex + 1) % tips.length;
+            tipText.textContent = tips[currentTipIndex];
+            tipText.style.opacity = 1;
+          }, 200);
+        }, 10000);
+      }
+
+      // Função para simular o carregamento com aspecto mais realista e rápido
+      function simulateLoading() {
+        const loadingScreen = document.getElementById("loadingScreen");
+        const loadingProgress = document.getElementById("loadingProgress");
+        const loadingText = document.getElementById("loadingText");
+        const loadingPercentage = document.getElementById("loading-percentage");
+
+        let progress = 0;
+        let targetProgress = 0;
+        let loadingSpeed = 5.0; // Aumentado significativamente para maior velocidade
+
+        // Etapas de carregamento e mensagens correspondentes (simplificadas)
+        const loadingSteps = [
+          { target: 40, message: "Inicializando sistemas de proteção...", speed: 6.0 },
+          { target: 80, message: "Carregando módulos de segurança...", speed: 6.0 },
+          { target: 100, message: "Sistemas prontos!", speed: 6.0 },
+        ];
+
+        let currentStep = 0;
+
+        loadingText.textContent = loadingSteps[0].message;
+        targetProgress = loadingSteps[0].target;
+        loadingSpeed = loadingSteps[0].speed;
+
+        const loadingInterval = setInterval(() => {
+          // Avançar para o próximo alvo
+          if (progress >= targetProgress) {
+            currentStep++;
+
+            if (currentStep < loadingSteps.length) {
+              const step = loadingSteps[currentStep];
+              loadingText.textContent = step.message;
+              targetProgress = step.target;
+              loadingSpeed = step.speed;
+            } else if (progress >= 100) {
+              loadingText.textContent = "Iniciando...";
+
+              // Reduzido o tempo de fadeout
+              setTimeout(() => {
+                loadingScreen.style.opacity = "0";
+                setTimeout(() => {
+                  loadingScreen.style.display = "none";
+                }, 200); // Reduzido significativamente
+              }, 100); // Reduzido significativamente
+
+              clearInterval(loadingInterval);
+            }
+          }
+
+          // Incremento de progresso mais rápido
+          progress += loadingSpeed * (Math.random() * 0.5 + 0.5);
+          progress = Math.min(progress, 100);
+
+          // Atualizar a barra de progresso e porcentagem
+          loadingProgress.style.width = progress + "%";
+          loadingPercentage.textContent = Math.round(progress) + "%";
+        }, 900); // Intervalo reduzido para carregamento mais rápido (loading)
+      }
+
+      // Função para abrir o celular/tablet com animação
+      function openPhone() {
+        const phoneOverlay = document.getElementById("phoneOverlay");
+        const phoneContainer = document.querySelector(".phone-container");
+
+        phoneOverlay.style.display = "flex";
+        updatePhoneTime(); // Atualizar a hora
+
+        // Trigger reflow
+        void phoneOverlay.offsetWidth;
+
+        phoneOverlay.style.opacity = "1";
+
+        setTimeout(() => {
+          phoneContainer.classList.add("active");
+        }, 100);
+      }
+
+      // Função para fechar o celular/tablet com animação
+      function closePhone() {
+        const phoneOverlay = document.getElementById("phoneOverlay");
+        const phoneContainer = document.querySelector(".phone-container");
+
+        phoneContainer.classList.remove("active");
+        phoneOverlay.style.opacity = "0";
+
+        setTimeout(() => {
+          phoneOverlay.style.display = "none";
+        }, 400);
+      }
+
+      // Inicialização quando o documento estiver carregado
+      window.addEventListener("load", function () {
+        createDigitalParticles();
+        rotateTips();
+        simulateLoading();
+
+        // Atualizar o relógio do celular a cada minuto
+        setInterval(updatePhoneTime, 60000);
+      });
+
+      // Tornar a função openPhone global para que possa ser chamada de outros arquivos
+      window.openPhone = openPhone;
+      window.closePhone = closePhone;
+    </script>
+  </body>
+</html>
